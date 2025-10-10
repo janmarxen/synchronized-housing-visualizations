@@ -1,0 +1,20 @@
+.App {
+    text-align: center;
+    height: 100%;
+}
+
+#control-bar-container{
+    height: 10%;
+}
+#view-container{
+    height: 80%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.col2{
+    float: left;
+    width: 50%;
+}
