@@ -23,7 +23,9 @@ function App() {
 
     return (
         <div className="App">
+            <div id={"MultiviewContainer"} className={"row"}>
 
+            </div>
         </div>
     );
 }

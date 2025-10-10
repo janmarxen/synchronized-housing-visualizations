@@ -2,8 +2,6 @@ import './Scatterplot.css'
 import { useEffect, useRef } from 'react';
 
 import ScatterplotD3 from './Scatterplot-d3';
-import {updateSelectedItem} from "../../redux/MatrixSlice";
-import {updateHoveredCell} from "../../redux/MatrixSyncSlice";
 
 // TODO: import action methods from reducers
 
@@ -69,7 +67,9 @@ function ScatterplotContainer(scatterplotData, xAttribute, yAttribute, controlle
 
     return(
         <div ref={divContainerRef} className="scatterplotDivContainer col2">
+            <div id="" className="row">
 
+            </div>
         </div>
     )
 }
