@@ -87,8 +87,9 @@ export function getDefaultFontSize (){
 
 export async function fetchCSV(filePath,callback_f){
     fetchText(filePath,(textResponse)=>{
-        const data = Papa.parse(textResponse, {header:true});
-        callback_f(data);
+        const result = Papa.parse(textResponse, {header:true, dynamicTyping:true});
+        result.data = result.data.map((item,i)=>{return {...item,index:i}});
+        callback_f(result);
     })
 }
 
@@ -98,7 +99,7 @@ export async function  fetchText(filePath,callback_f){
             'Accept': 'text/plain'
         }
     }).then((response) =>{
-        return response.text()
+        return response.text();
     }).then((response)=>{
         callback_f(response);
     })
