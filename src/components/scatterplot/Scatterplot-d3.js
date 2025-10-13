@@ -26,7 +26,7 @@ class ScatterplotD3 {
         this.width = this.size.width - this.margin.left - this.margin.right;
         this.height = this.size.height - this.margin.top - this.margin.bottom;
 
-        // initialize the svg and keep it in a class property to reuse it in renderMatrix()
+        // initialize the svg and keep it in a class property to reuse it in renderScatterplot()
         this.matSvg=d3.select(this.el).append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)
             .attr("height", this.height + this.margin.top + this.margin.bottom)
