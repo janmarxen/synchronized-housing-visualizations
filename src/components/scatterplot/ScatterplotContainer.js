@@ -5,18 +5,15 @@ import ScatterplotD3 from './Scatterplot-d3';
 
 // TODO: import action methods from reducers
 
-function ScatterplotContainer(scatterplotData, xAttribute, yAttribute, controllerMethods){
-
-    // const xAttribute= "nbProductSold"
-    // const yAttribute= "salesGrowth"
+function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods}){
 
     // every time the component re-render
     useEffect(()=>{
-        console.log("ScatterplotContainer useEffect (called each time matrix re-renders)");
+        console.log("ScatterplotContainer useEffect (called each time scatterplot re-renders)");
     }); // if no dependencies, useEffect is called at each re-render
 
     const divContainerRef=useRef(null);
-    const scatterplotD3Ref = useRef(null)
+    const scatterplotD3Ref = useRef(null);
 
     const getCharSize = function(){
         // getting size from parent item
@@ -47,9 +44,9 @@ function ScatterplotContainer(scatterplotData, xAttribute, yAttribute, controlle
     useEffect(()=>{
         console.log("ScatterplotContainer useEffect with dependency [scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods], called each time scatterplotData changes...");
 
-        const handleOnClick = function(cellData){
+        const handleOnClick = function(itemData){
         }
-        const handleOnMouseEnter = function(cellData){
+        const handleOnMouseEnter = function(itemData){
         }
         const handleOnMouseLeave = function(){
         }

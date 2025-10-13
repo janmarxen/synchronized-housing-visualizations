@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { getDefaultFontSize } from '../../utils/helper';
+// import { getDefaultFontSize } from '../../utils/helper';
 
 class ScatterplotD3 {
     margin = {top: 100, right: 10, bottom: 50, left: 100};
@@ -75,7 +75,7 @@ class ScatterplotD3 {
     }
 
     updateAxis = function(visData,xAttribute,yAttribute){
-        // compute min max using d3.min/max(item=>item.attribute)
+        // compute min max using d3.min/max(visData.map(item=>item.attribute))
         // this.xScale.domain(...);
         // this.yScale.domain(...);
 
@@ -84,6 +84,8 @@ class ScatterplotD3 {
 
 
     renderScatterplot = function (visData, xAttribute, yAttribute, controllerMethods){
+        console.log("render scatterplot with a new data list ...")
+
         // build the size scales and x,y axis
         this.updateAxis(visData,xAttribute,yAttribute);
 
