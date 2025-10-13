@@ -8,11 +8,11 @@ class VisD3 {
     width;
     matSvg;
     // add specific class properties used for the vis render/updates
-    // cellSize= 34;
-    // radius = this.cellSize / 2;
+    // markerSize= 34;
+    // radius = this.markerSize / 2;
     // colorScheme = d3.schemeYlGnBu[9];
-    // cellColorScale = d3.scaleQuantile(this.colorScheme);
-    // cellSizeScale = d3.scaleLinear()
+    // markerColorScale = d3.scaleQuantile(this.colorScheme);
+    // markerSizeScale = d3.scaleLinear()
     //     .range([2, this.radius-1])
     // ;
 
@@ -84,7 +84,7 @@ class VisD3 {
         // this.scale1.domain([minVal, maxVal])
 
         this.matSvg.selectAll(".itemG")
-            // all elements with the class .cellG (empty the first time)
+            // all elements with the class .itemG (empty the first time)
             .data(visData,(itemData)=>itemData.index)
             .join(
                 enter=>{

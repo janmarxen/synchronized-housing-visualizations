@@ -7,7 +7,7 @@ function Matrix({matrixData}){
 
     // do not write any behaviour here except hook function declarations or function/constant initialization
     const divContainerRef = useRef(null);
-    const getCharSize = function(){
+    const getChartSize = function(){
         // getting size from parent item
         let width;
         let height;
@@ -23,7 +23,7 @@ function Matrix({matrixData}){
         // do something when the component did mount
         console.log("Matrix useEffect with dependency [], called each time the component did mount...");
         const matrixD3Vis = new MatrixD3(divContainerRef.current);
-        matrixD3Vis.create({size:getCharSize()});
+        matrixD3Vis.create({size:getChartSize()});
         matrixD3Ref.current = matrixD3Vis;
         return ()=>{
             // do something when the component did unmout (removed for the screen)

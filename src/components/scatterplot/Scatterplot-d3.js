@@ -52,12 +52,12 @@ class ScatterplotD3 {
         selection.style("opacity", selected?1:this.defaultOpacity)
         ;
 
-        selection.select(".dotCircle")
+        selection.select(".markerCircle")
             .attr("stroke-width",selected?2:0)
         ;
     }
 
-    updateDots(selection,xAttribute,yAttribute){
+    updateMarkers(selection,xAttribute,yAttribute){
         // transform selection
         selection
             .transition().duration(this.transitionDuration)
@@ -87,7 +87,7 @@ class ScatterplotD3 {
         // build the size scales and x,y axis
         this.updateAxis(visData,xAttribute,yAttribute);
 
-        this.matSvg.selectAll(".dotG")
+        this.matSvg.selectAll(".markerG")
             // all elements with the class .cellG (empty the first time)
             .data(visData,(itemData)=>itemData.index)
             .join(
@@ -95,7 +95,7 @@ class ScatterplotD3 {
                     // all data items to add:
                     // doesn’exist in the select but exist in the new array
                     const itemG=enter.append("g")
-                        .attr("class","dotG")
+                        .attr("class","markerG")
                         .style("opacity",this.defaultOpacity)
                         .on("click", (event,itemData)=>{
                             controllerMethods.handleOnClick(itemData);
@@ -103,14 +103,14 @@ class ScatterplotD3 {
                     ;
                     // render element as child of each element "g"
                     itemG.append("circle")
-                        .attr("class","dotCircle")
+                        .attr("class","markerCircle")
                         .attr("r",this.circleRadius)
                         .attr("stroke","red")
                     ;
-                    this.updateDots(itemG,xAttribute,yAttribute);
+                    this.updateMarkers(itemG,xAttribute,yAttribute);
                 },
                 update=>{
-                    this.updateDots(update,xAttribute,yAttribute)
+                    this.updateMarkers(update,xAttribute,yAttribute)
                 },
                 exit =>{
                     exit.remove()
