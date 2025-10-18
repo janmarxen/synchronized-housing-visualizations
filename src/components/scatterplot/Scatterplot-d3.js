@@ -58,11 +58,14 @@ class ScatterplotD3 {
     }
 
     updateMarkers(selection,xAttribute,yAttribute){
-        // transform selection
+        // transform selection: position each markerG using x/y scales
         selection
             .transition().duration(this.transitionDuration)
-            .attr("transform", (item)=>{
-                // use scales to return shape position from data values
+            .attr("transform", (item) => {
+                // Use area for X and price for Y
+                const x = this.xScale(+item[xAttribute]);
+                const y = this.yScale(+item[yAttribute]);
+                return `translate(${x},${y})`;
             })
         ;
         this.changeBorderAndOpacity(selection, false)
@@ -75,11 +78,18 @@ class ScatterplotD3 {
     }
 
     updateAxis = function(visData,xAttribute,yAttribute){
-        // compute min max using d3.min/max(visData.map(item=>item.attribute))
-        // this.xScale.domain(...);
-        // this.yScale.domain(...);
-
-        // create axis with computed scales
+        // compute min max for area (x) and price (y)
+        const xVals = visData.map(item => +item[xAttribute]);
+        const yVals = visData.map(item => +item[yAttribute]);
+        this.xScale.domain([d3.min(xVals), d3.max(xVals)]);
+        this.yScale.domain([d3.min(yVals), d3.max(yVals)]);
+        this.matSvg.select(".xAxisG")
+            .transition().duration(500)
+            .call(d3.axisBottom(this.xScale))
+            ;
+        this.matSvg.select(".yAxisG")
+            .transition().duration(500)
+            .call(d3.axisLeft(this.yScale))
     }
 
 

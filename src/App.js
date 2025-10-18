@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import {fetchCSV} from "./utils/helper";
+import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
 
 function App() {
     console.log("App component function call...")
@@ -21,10 +22,27 @@ function App() {
         }
     },[])
 
+
+    const [selectedItems, setSelectedItems] = useState([])
+    const scatterplotControllerMethods = {
+        updateSelectedItems: (items) =>{
+        setSelectedItems(items);
+        }
+    };
+
     return (
         <div className="App">
             <div id={"MultiviewContainer"} className={"row"}>
-
+                <ScatterplotContainer
+                    scatterplotData={data}
+                    xAttribute="area"
+                    yAttribute="price"
+                />
+                <ScatterplotContainer
+                    scatterplotData={data}
+                    xAttribute="bedrooms"
+                    yAttribute="price"
+                />
             </div>
         </div>
     );

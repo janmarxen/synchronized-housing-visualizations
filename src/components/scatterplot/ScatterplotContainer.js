@@ -44,23 +44,25 @@ function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, scatterp
     useEffect(()=>{
         console.log("ScatterplotContainer useEffect with dependency [scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods], called each time scatterplotData changes...");
 
-        const handleOnClick = function(itemData){
+        const handleOnClick = function(cellData){
+            console.log("handleOnClick ...")
+            scatterplotControllerMethods.updateSelectedItems([cellData])
         }
-        const handleOnMouseEnter = function(itemData){
-        }
-        const handleOnMouseLeave = function(){
-        }
+        const handleOnMouseEnter = function(itemData){};
+        const handleOnMouseLeave = function(){};
 
         const controllerMethods={
             handleOnClick,
             handleOnMouseEnter,
             handleOnMouseLeave
-        }
+        };
 
         // get the current instance of scatterplotD3 from the Ref...
-        // call renderScatterplot of ScatterplotD3...;
-
-    },[scatterplotData, scatterplotControllerMethods]);// if dependencies, useEffect is called after each data update, in our case only matrixData changes.
+        const scatterplotD3 = scatterplotD3Ref.current;
+        if (scatterplotD3 && scatterplotData && scatterplotData.length > 0) {
+            scatterplotD3.renderScatterplot(scatterplotData, xAttribute, yAttribute, controllerMethods);
+        }
+    },[scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods]);// if dependencies, useEffect is called after each data update, in our case only matrixData changes.
 
     return(
         <div ref={divContainerRef} className="scatterplotDivContainer col2">
