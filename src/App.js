@@ -1,5 +1,5 @@
 import './App.css';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback, useMemo} from 'react'
 import {fetchCSV} from "./utils/helper";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
 import StackedCountsContainer from "./components/stackedcounts/StackedCountsContainer";
@@ -7,10 +7,7 @@ import StackedCountsContainer from "./components/stackedcounts/StackedCountsCont
 function App() {
     console.log("App component function call...")
     const [data,setData] = useState([])
-    // every time the component re-render
-    useEffect(()=>{
-        console.log("App useEffect (called each time App re-renders)");
-    }); // if no dependencies, useEffect is called at each re-render
+    // remove noisy per-render log
 
     useEffect(()=>{
         console.log("App did mount");
@@ -25,18 +22,18 @@ function App() {
 
 
     const [selectedItems, setSelectedItems] = useState([])
-    const scatterplotControllerMethods = {
-        updateSelectedItems: (items) =>{
+    // make updateSelectedItems stable so child components don't receive a new object each render
+    const updateSelectedItems = useCallback((items) => {
         setSelectedItems(items);
-        }
-    };
+    }, []);
+    const scatterplotControllerMethods = useMemo(() => ({ updateSelectedItems }), [updateSelectedItems]);
 
-    // Compute y-axis domain for price
-    let yDomain = [0, 1];
-    if (data && data.length > 0) {
+    // Compute y-axis domain for price (memoized so reference is stable)
+    const yDomain = useMemo(()=>{
+        if (!data || data.length === 0) return [0,1];
         const prices = data.map(d => +d.price).filter(v => !isNaN(v));
-        yDomain = [Math.min(...prices), Math.max(...prices)];
-    }
+        return prices.length>0 ? [Math.min(...prices), Math.max(...prices)] : [0,1];
+    },[data]);
 
     return (
         <div className="App">
@@ -53,6 +50,7 @@ function App() {
                 <StackedCountsContainer
                     data={data}
                     scatterplotControllerMethods={scatterplotControllerMethods}
+                    yDomain={yDomain}
                     selectedItems={selectedItems}
                 />
             </div>
