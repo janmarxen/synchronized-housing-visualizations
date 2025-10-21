@@ -105,3 +105,16 @@ export async function  fetchText(filePath,callback_f){
     })
     ;
 }
+
+// Returns all data points inside the brush area
+export function getBrushedData(svg, x0, y0, x1, y1, xScale, yScale, xAttribute, yAttribute) {
+    const selectedData = [];
+    svg.selectAll('.markerG').each((d) => {
+        const x = xScale(+d[xAttribute]);
+        const y = yScale(+d[yAttribute]);
+        if (x >= x0 && x <= x1 && y >= y0 && y <= y1) {
+            selectedData.push(d);
+        }
+    });
+    return selectedData;
+}

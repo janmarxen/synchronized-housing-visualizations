@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-// import { getDefaultFontSize } from '../../utils/helper';
+import { getBrushedData } from '../../utils/helper';
 
 class ScatterplotD3 {
     margin = {top: 100, right: 10, bottom: 50, left: 100};
@@ -21,6 +21,8 @@ class ScatterplotD3 {
 
     create = function (config) {
         this.size = {width: config.size.width, height: config.size.height};
+        this.yDomain = config.yDomain;
+        this.showYAxis = config.showYAxis;
 
         // get the effect size of the view by subtracting the margin
         this.width = this.size.width - this.margin.left - this.margin.right;
@@ -33,7 +35,6 @@ class ScatterplotD3 {
             .append("g")
             .attr("class","matSvgG")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-        ;
 
         this.xScale = d3.scaleLinear().range([0,this.width]);
         this.yScale = d3.scaleLinear().range([this.height,0]);
@@ -71,29 +72,74 @@ class ScatterplotD3 {
         this.changeBorderAndOpacity(selection, false)
     }
 
-    highlightSelectedItems(selectedItems){
-        // use pattern update to change the border and opacity of objects:
-        //      - call this.changeBorderAndOpacity(selection,true) for objects in selectedItems
-        //      - this.changeBorderAndOpacity(selection,false) for objects not in selectedItems
+    highlightSelected(selectedItems) {
+        // Select all marker groups
+        const markerGs = this.matSvg.selectAll('.markerG');
+        // If no selection, reset all
+        if (!selectedItems || selectedItems.length === 0) {
+            this.changeBorderAndOpacity(markerGs, false);
+            return;
+        }
+        // For each marker, check if its data is in selectedItems
+        markerGs.each((d, i, nodes) => {
+            // d is the bound data for this marker
+            // Check if d is in selectedItems (by index or unique property)
+            const isSelected = selectedItems.some(sel => sel.index === d.index);
+            const selection = d3.select(nodes[i]);
+            this.changeBorderAndOpacity(selection, isSelected);
+        });
     }
 
     updateAxis = function(visData,xAttribute,yAttribute){
-        // compute min max for area (x) and price (y)
+        // compute min max for area (x)
         const xVals = visData.map(item => +item[xAttribute]);
-        const yVals = visData.map(item => +item[yAttribute]);
         this.xScale.domain([d3.min(xVals), d3.max(xVals)]);
-        this.yScale.domain([d3.min(yVals), d3.max(yVals)]);
+        // yScale domain is set from shared yDomain
+        if (this.yDomain) {
+            this.yScale.domain(this.yDomain);
+        }
         this.matSvg.select(".xAxisG")
             .transition().duration(500)
-            .call(d3.axisBottom(this.xScale))
-            ;
-        this.matSvg.select(".yAxisG")
-            .transition().duration(500)
-            .call(d3.axisLeft(this.yScale))
+            .call(d3.axisBottom(this.xScale));
+
+        // Only render y-axis if showYAxis is true
+        if (this.showYAxis) {
+            this.matSvg.select(".yAxisG")
+                .transition().duration(500)
+                .call(d3.axisLeft(this.yScale));
+        } else {
+            this.matSvg.select(".yAxisG").selectAll('*').remove();
+        }
+
+        // Remove old axis labels if they exist
+        this.matSvg.selectAll('.xAxisLabel').remove();
+        this.matSvg.selectAll('.yAxisLabel').remove();
+
+        // Add x-axis label
+        this.matSvg.append('text')
+            .attr('class', 'xAxisLabel')
+            .attr('text-anchor', 'middle')
+            .attr('x', this.width / 2)
+            .attr('y', this.height + 40)
+            .text(xAttribute);
+
+        // Add y-axis label only if showYAxis is true
+        if (this.showYAxis) {
+            this.matSvg.append('text')
+                .attr('class', 'yAxisLabel')
+                .attr('text-anchor', 'middle')
+                .attr('transform', `rotate(-90)`)
+                .attr('x', -this.height / 2)
+                .attr('y', -60)
+                .text(yAttribute);
+        }
     }
 
 
-    renderScatterplot = function (visData, xAttribute, yAttribute, controllerMethods){
+    renderScatterplot = function (visData, xAttribute, yAttribute, controllerMethods, yDomain, showYAxis){
+        // update yDomain/showYAxis if provided
+        if (yDomain) this.yDomain = yDomain;
+        if (typeof showYAxis !== 'undefined') this.showYAxis = showYAxis;
         console.log("render scatterplot with a new data list ...")
 
         // build the size scales and x,y axis
@@ -130,10 +176,33 @@ class ScatterplotD3 {
                 }
 
             )
+
+        // Add brushing functionality    
+        // Remove any existing brush before adding a new one
+        this.matSvg.selectAll('.brush').remove();
+        // Add D3 brush tool
+        const brush = d3.brush()
+            .extent([[0, 0], [this.width, this.height]])
+            .on('brush end', (event) => {
+                if (event.selection) {
+                    const [[x0, y0], [x1, y1]] = event.selection;
+                    // Use helper function from utils/helper.js
+                    const selectedData = getBrushedData(this.matSvg, x0, y0, x1, y1, this.xScale, this.yScale, xAttribute, yAttribute);
+                    // Call the controller method to update selection in React
+                    controllerMethods.handleOnBrush(selectedData);
+                } else {
+                    // If brush is cleared, clear selection
+                    controllerMethods.handleOnBrush([]);
+                }
+            });
+        this.matSvg.append('g')
+            .attr('class', 'brush')
+            .call(brush);
     }
 
     clear = function(){
         d3.select(this.el).selectAll("*").remove();
     }
+
 }
 export default ScatterplotD3;

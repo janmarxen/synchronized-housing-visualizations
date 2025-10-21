@@ -2,6 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import {fetchCSV} from "./utils/helper";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
+import DualScatterplotContainer from "./components/dualscatterplot/DualScatterplotContainer";
 
 function App() {
     console.log("App component function call...")
@@ -30,6 +31,13 @@ function App() {
         }
     };
 
+    // Compute y-axis domain for price
+    let yDomain = [0, 1];
+    if (data && data.length > 0) {
+        const prices = data.map(d => +d.price).filter(v => !isNaN(v));
+        yDomain = [Math.min(...prices), Math.max(...prices)];
+    }
+
     return (
         <div className="App">
             <div id={"MultiviewContainer"} className={"row"}>
@@ -37,11 +45,20 @@ function App() {
                     scatterplotData={data}
                     xAttribute="area"
                     yAttribute="price"
+                    yDomain={yDomain}
+                    showYAxis={true}
+                    scatterplotControllerMethods={scatterplotControllerMethods}
+                    selectedItems={selectedItems}
                 />
-                <ScatterplotContainer
-                    scatterplotData={data}
-                    xAttribute="bedrooms"
+                <DualScatterplotContainer
+                    data={data}
+                    xAttribute1="bedrooms"
+                    xAttribute2="bathrooms"
                     yAttribute="price"
+                    yDomain={yDomain}
+                    showYAxis={false}
+                    scatterplotControllerMethods={scatterplotControllerMethods}
+                    selectedItems={selectedItems}
                 />
             </div>
         </div>
