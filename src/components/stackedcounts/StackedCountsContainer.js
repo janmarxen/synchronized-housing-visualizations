@@ -53,6 +53,13 @@ function StackedCountsContainer({data, scatterplotControllerMethods, selectedIte
             <div className="stackedCountsLegend">
                 <div className="legend-item"><span className="legend-swatch swatch-bed"></span> Bedrooms</div>
                 <div className="legend-item"><span className="legend-swatch swatch-bath"></span> Bathrooms</div>
+                <div style={{marginLeft:'auto'}}>
+                    <button onClick={()=>{
+                        // clear D3 manual brushes and clear controller selection
+                        if (d3Ref.current && d3Ref.current.clearAllBrushes) d3Ref.current.clearAllBrushes();
+                        try{ scatterplotControllerMethods.updateSelectedItems([]); }catch(e){}
+                    }}>Clear selections</button>
+                </div>
             </div>
             <div className="stackedCountsScroll">
                 <div ref={divRef} className="stackedCountsDivContainer"></div>

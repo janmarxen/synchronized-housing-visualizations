@@ -59,15 +59,64 @@ class StackedCountsD3 {
     d3.select(this.el).selectAll('.brush-tooltip').remove();
     this.tooltip = d3.select(this.el).append('div').attr('class','brush-tooltip').style('display','none');
 
-  // create a 2D brush (allow horizontal + vertical selection)
-  this.brush = d3.brush().extent([[0,0],[this.width,this.height]]);
-    // brushG appended at end so it's on top
-    this.brushG = this.svg.append('g').attr('class','brush');
-    this.brushG.call(this.brush);
-    // set handlers to instance methods that will use current data/scale stored during render
-    this.brush.on('start', (event) => this._onBrushStart(event));
-    this.brush.on('brush', (event) => this._onBrush(event));
-    this.brush.on('end', (event) => this._onBrushEnd(event));
+    // We'll implement manual multi-rectangle selection (allow many persistent rectangles)
+    // keep an array of current rectangles
+    this.multiBrushes = [];
+    this._creating = false;
+    this._currentRect = null;
+
+    // attach manual pointer handlers to create rectangles by drag
+    const svgElem = d3.select(this.el).select('svg');
+    svgElem.on('mousedown.multiRect', (event) => {
+      // only left button
+      if (event.button !== 0) return;
+      const [mx,my] = d3.pointer(event, this.svg.node());
+      this._creating = true;
+      this._createStart = [mx,my];
+      // create a new rect in the local group
+      this._currentRect = this.svg.append('rect')
+        .attr('class','multi-brush')
+        .attr('x', mx).attr('y', my).attr('width', 0).attr('height', 0)
+        .style('fill','rgba(74,144,226,0.12)')
+        .style('stroke','#1f6fbf')
+        .style('stroke-width',1.2)
+        .style('pointer-events','all');
+    });
+    svgElem.on('mousemove.multiRect', (event) => {
+      if (!this._creating || !this._currentRect) return;
+      const [mx,my] = d3.pointer(event, this.svg.node());
+      const [sx,sy] = this._createStart;
+      const x = Math.min(sx,mx);
+      const y = Math.min(sy,my);
+      const w = Math.abs(mx - sx);
+      const h = Math.abs(my - sy);
+      this._currentRect.attr('x', x).attr('y', y).attr('width', Math.max(0,w)).attr('height', Math.max(0,h));
+    });
+    svgElem.on('mouseup.multiRect', (event) => {
+      if (!this._creating) return;
+      this._creating = false;
+      const [mx,my] = d3.pointer(event, this.svg.node());
+      const [sx,sy] = this._createStart;
+      const x = Math.min(sx,mx);
+      const y = Math.min(sy,my);
+      const w = Math.abs(mx - sx);
+      const h = Math.abs(my - sy);
+      if (this._currentRect) {
+        if (w < 4 || h < 4) {
+          // too small, remove
+          this._currentRect.remove();
+        } else {
+          // finalize rect and store its bbox
+          const bbox = {x, y, x2: x + w, y2: y + h};
+          this.multiBrushes.push({rect: this._currentRect, bbox});
+          // make rect non-editable by pointer (but clickable if needed)
+          this._currentRect.style('pointer-events','none');
+          // update selection from all brushes
+          this.updateBrushesSelection();
+        }
+        this._currentRect = null;
+      }
+    });
 
     // (debug overlay removed) brush and tooltip remain persistent
   }
@@ -121,6 +170,33 @@ class StackedCountsD3 {
       try { if (this.currentControllerMethods) this.currentControllerMethods.handleOnBrush([]); } catch(e){}
       if (this.tooltip) this.tooltip.style('display','none');
     }
+  }
+
+  // compute combined selection across all manual rectangles and inform controller
+  updateBrushesSelection = function(){
+    if (!this.currentControllerMethods) return;
+    const selected = [];
+    // iterate points and check containment in any bbox
+    this.rowsGroup.selectAll('.vpoint').each((d, i, nodes) => {
+      const node = nodes[i];
+      const cx = parseFloat(d3.select(node).attr('cx'));
+      const cy = parseFloat(d3.select(node).attr('cy'));
+      for (let br of (this.multiBrushes||[])){
+        const b = br.bbox;
+        if (cx >= b.x && cx <= b.x2 && cy >= b.y && cy <= b.y2) { selected.push(d.original); break; }
+      }
+    });
+    const unique = Array.from(new Map(selected.map(s=>[s.index,s])).values());
+    try { this.currentControllerMethods.handleOnBrush(unique); } catch(e){}
+  }
+
+  // remove all manual rectangles and clear selection
+  clearAllBrushes = function(){
+    if (this.multiBrushes && this.multiBrushes.length>0){
+      this.multiBrushes.forEach(b=>{ try{ b.rect.remove(); }catch(e){} });
+      this.multiBrushes = [];
+    }
+    try { if (this.currentControllerMethods) this.currentControllerMethods.handleOnBrush([]); } catch(e){}
   }
 
   // Epanechnikov kernel
