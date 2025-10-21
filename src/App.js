@@ -2,7 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import {fetchCSV} from "./utils/helper";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
-import DualScatterplotContainer from "./components/dualscatterplot/DualScatterplotContainer";
+import StackedCountsContainer from "./components/stackedcounts/StackedCountsContainer";
 
 function App() {
     console.log("App component function call...")
@@ -50,13 +50,8 @@ function App() {
                     scatterplotControllerMethods={scatterplotControllerMethods}
                     selectedItems={selectedItems}
                 />
-                <DualScatterplotContainer
+                <StackedCountsContainer
                     data={data}
-                    xAttribute1="bedrooms"
-                    xAttribute2="bathrooms"
-                    yAttribute="price"
-                    yDomain={yDomain}
-                    showYAxis={false}
                     scatterplotControllerMethods={scatterplotControllerMethods}
                     selectedItems={selectedItems}
                 />
