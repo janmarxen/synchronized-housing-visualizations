@@ -2,7 +2,7 @@ import './App.css';
 import {useState, useEffect, useCallback, useMemo} from 'react'
 import {fetchCSV} from "./utils/helper";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
-import StackedCountsContainer from "./components/stackedcounts/StackedCountsContainer";
+import ViolinScatterContainer from "./components/violinscatter/ViolinScatterContainer";
 
 function App() {
     console.log("App component function call...")
@@ -47,7 +47,7 @@ function App() {
                     scatterplotControllerMethods={scatterplotControllerMethods}
                     selectedItems={selectedItems}
                 />
-                <StackedCountsContainer
+                <ViolinScatterContainer
                     data={data}
                     scatterplotControllerMethods={scatterplotControllerMethods}
                     yDomain={yDomain}
