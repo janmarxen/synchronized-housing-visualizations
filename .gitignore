@@ -22,3 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea
+
+# Local documents to remain untracked
+PROJECT_STRUCTURE.md
+SYNCHRONIZATION_DIAGRAM.md
+IndividualAssignmentInstructions.pdf
+useful_commands.md
+TODO.md
