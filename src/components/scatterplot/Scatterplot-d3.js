@@ -66,9 +66,20 @@ class ScatterplotD3 {
                 // Use area for X and price for Y
                 const x = this.xScale(+item[xAttribute]);
                 const y = this.yScale(+item[yAttribute]);
+                // guard against invalid values
+                if (!isFinite(x) || !isFinite(y)) {
+                    // move off-screen (or hide) to avoid invalid transform values
+                    return `translate(-9999,-9999)`;
+                }
                 return `translate(${x},${y})`;
             })
         ;
+        // hide any markers with invalid positions
+        selection.attr('display', (item) => {
+            const x = this.xScale(+item[xAttribute]);
+            const y = this.yScale(+item[yAttribute]);
+            return (!isFinite(x) || !isFinite(y)) ? 'none' : null;
+        });
         this.changeBorderAndOpacity(selection, false)
     }
 
@@ -163,7 +174,8 @@ class ScatterplotD3 {
                     itemG.append("circle")
                         .attr("class","markerCircle")
                         .attr("r",this.circleRadius)
-                        .attr("stroke","red")
+                        .attr("stroke","#2e7d32")
+                        .attr("fill","#1b5e20")
                     ;
                     this.updateMarkers(itemG,xAttribute,yAttribute);
                 },

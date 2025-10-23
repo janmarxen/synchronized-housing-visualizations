@@ -7,11 +7,7 @@ import ScatterplotD3 from './Scatterplot-d3';
 
 function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods, selectedItems}) {
 
-    // every time the component re-render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(()=>{
-        console.log("ScatterplotContainer useEffect (called each time scatterplot re-renders)");
-    }); // if no dependencies, useEffect is called at each re-render
+    // removed per-render debug log
 
     const divContainerRef=useRef(null);
     const scatterplotD3Ref = useRef(null);

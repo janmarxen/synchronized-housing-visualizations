@@ -1,4 +1,4 @@
-import * as d3 from 'd3'
+    import * as d3 from 'd3'
 
 class ViolinScatterD3 {
   margin = { top: 20, right: 16, bottom: 40, left: 120 };
@@ -44,7 +44,9 @@ class ViolinScatterD3 {
     }
 
     this.rowsGroup = this.svg.append('g').attr('class','rows-group');
-    this.svg.append('g').attr('class','xAxis').attr('transform', `translate(0,${isFinite(this.height)?this.height:0})`);
+  // group for vertical separators between categories
+  this.sepGroup = this.svg.append('g').attr('class','sep-group');
+  this.svg.append('g').attr('class','xAxis').attr('transform', `translate(0,${isFinite(this.height)?this.height:0})`);
 
     d3.select(this.el).style('position','relative');
     d3.select(this.el).selectAll('.brush-tooltip').remove();
@@ -198,37 +200,57 @@ class ViolinScatterD3 {
   this.y = y;
 
   const unionCounts = [1,2,3,4,5];
-  const xBand = d3.scaleBand().domain(unionCounts).range([0, this.width]).padding(0.12);
+  // reduce padding between bands so each category occupies more horizontal space
+  const xBand = d3.scaleBand().domain(unionCounts).range([0, this.width]).padding(0.06);
 
     const ySamples = d3.range(y.domain()[0], y.domain()[1], (y.domain()[1]-y.domain()[0]) / 80);
     const kde = this.kernelDensityEstimator(this.kernelEpanechnikov((y.domain()[1]-y.domain()[0]) / 40), ySamples);
 
     const densitiesBed = {};
     const densitiesBath = {};
+    const densitiesStories = {};
     let globalMax = 0;
     unionCounts.forEach(c => {
       const bedVals = data.filter(d => +d.bedrooms === c).map(d=>+d.price).filter(v=>!isNaN(v));
       const bathVals = data.filter(d => +d.bathrooms === c).map(d=>+d.price).filter(v=>!isNaN(v));
+      const storyVals = data.filter(d => +d.stories === c).map(d=>+d.price).filter(v=>!isNaN(v));
       const dBed = bedVals.length>0 ? kde(bedVals) : ySamples.map(s=>[s,0]);
       const dBath = bathVals.length>0 ? kde(bathVals) : ySamples.map(s=>[s,0]);
+      const dStories = storyVals.length>0 ? kde(storyVals) : ySamples.map(s=>[s,0]);
       densitiesBed[c] = dBed;
       densitiesBath[c] = dBath;
+      densitiesStories[c] = dStories;
       const m1 = d3.max(dBed, d=>d[1])||0;
       const m2 = d3.max(dBath, d=>d[1])||0;
-      globalMax = Math.max(globalMax, m1, m2);
+      const m3 = d3.max(dStories, d=>d[1])||0;
+      globalMax = Math.max(globalMax, m1, m2, m3);
     });
 
   const halfBand = xBand.bandwidth() / 2;
-  const violinMaxHalfWidth = Math.max(12, halfBand * 0.6);
+  const violinMaxHalfWidth = Math.max(12, halfBand * 0.72);
     const densityScale = d3.scaleLinear().domain([0, globalMax||1]).range([0, violinMaxHalfWidth]);
   this.rowsGroup.selectAll('*').remove();
+  // draw vertical separators between bands for clearer grouping
+  const separators = unionCounts.slice(0,-1).map((c,i)=>{
+    const next = unionCounts[i+1];
+    const pos = (xBand(c) + xBand(next)) / 2 + xBand.bandwidth() / 2;
+    return {x: pos};
+  });
+  const sepSel = this.sepGroup.selectAll('.sep-line').data(separators);
+  const sepEnter = sepSel.enter().append('line').attr('class','sep-line');
+  sepEnter.merge(sepSel).attr('x1',d=>d.x).attr('x2',d=>d.x).attr('y1',0).attr('y2',this.height).style('stroke','#ccc').style('stroke-dasharray','4 4').style('opacity',0.7);
+  sepSel.exit().remove();
   unionCounts.forEach(c => {
       const bandStart = xBand(c);
-      const centerLeft = bandStart + xBand.bandwidth() * 0.25;
-      const centerRight = bandStart + xBand.bandwidth() * 0.75;
+      // three centers across the band for bedrooms, stories, bathrooms
+      const centerLeft = bandStart + xBand.bandwidth() * 0.17; // bedrooms
+      const centerMid = bandStart + xBand.bandwidth() * 0.5;   // stories
+      const centerRight = bandStart + xBand.bandwidth() * 0.83; // bathrooms
       const dBed = densitiesBed[c];
       const dBath = densitiesBath[c];
+      const dStories = densitiesStories[c];
 
+      // bedroom violin (left)
       const areaBed = d3.area()
         .curve(d3.curveBasis)
         .y(d => y(d[0]))
@@ -243,6 +265,22 @@ class ViolinScatterD3 {
         .style('opacity', 0.6);
       vb.exit().remove();
 
+      // stories violin (middle)
+      const areaStories = d3.area()
+        .curve(d3.curveBasis)
+        .y(d => y(d[0]))
+        .x0(d => centerMid - densityScale(d[1]))
+        .x1(d => centerMid + densityScale(d[1]));
+      const vs = this.rowsGroup.selectAll(`.violin-story-${c}`).data([dStories]);
+      const vsEnter = vs.enter().append('path').attr('class', `violin violin-story-${c}`);
+      vsEnter.merge(vs)
+        .attr('d', areaStories)
+        .style('fill', '#f3e8ff')
+        .style('stroke', '#b889ff')
+        .style('opacity', 0.5);
+      vs.exit().remove();
+
+      // bathroom violin (right)
       const areaBath = d3.area()
         .curve(d3.curveBasis)
         .y(d => y(d[0]))
@@ -257,24 +295,34 @@ class ViolinScatterD3 {
         .style('opacity', 0.55);
       va.exit().remove();
 
+      // points: bedrooms
       const bedPoints = data.filter(d=>+d.bedrooms===c).map(d=>({original:d, py:y(+d.price)}));
-  bedPoints.forEach(p=>{ const ix=d3.bisectLeft(ySamples, +p.original.price); const densVal=(dBed[ix]&&dBed[ix][1])||0; const maxJ=densityScale(densVal); p.jitterX = centerLeft + (Math.random()*2 -1) * Math.max(1, maxJ*0.9); });
+      bedPoints.forEach(p=>{ const ix=d3.bisectLeft(ySamples, +p.original.price); const densVal=(dBed[ix]&&dBed[ix][1])||0; const maxJ=densityScale(densVal); p.jitterX = centerLeft + (Math.random()*2 -1) * Math.max(1, maxJ*0.9); });
       const bpSel = this.rowsGroup.selectAll(`.point-bed-${c}`).data(bedPoints, d=>d.original.index);
       const bpEnter = bpSel.enter().append('circle').attr('class', `vpoint point-bed`).attr('r',3).on('click',(e,d)=>controllerMethods.handleOnClick(d.original));
       bpEnter.merge(bpSel).attr('cx',d=>d.jitterX).attr('cy',d=>d.py).style('fill','#4A90E2').style('opacity',this.defaultOpacity).style('stroke','none');
       bpSel.exit().remove();
 
+      // points: stories (middle)
+      const storiesPoints = data.filter(d=>+d.stories===c).map(d=>({original:d, py:y(+d.price)}));
+      storiesPoints.forEach(p=>{ const ix=d3.bisectLeft(ySamples, +p.original.price); const densVal=(dStories[ix]&&dStories[ix][1])||0; const maxJ=densityScale(densVal); p.jitterX = centerMid + (Math.random()*2 -1) * Math.max(1, maxJ*0.9); });
+      const spSel = this.rowsGroup.selectAll(`.point-story-${c}`).data(storiesPoints, d=>d.original.index);
+      const spEnter = spSel.enter().append('circle').attr('class', `vpoint point-story`).attr('r',3).on('click',(e,d)=>controllerMethods.handleOnClick(d.original));
+      spEnter.merge(spSel).attr('cx',d=>d.jitterX).attr('cy',d=>d.py).style('fill','#9b59b6').style('opacity',this.defaultOpacity).style('stroke','none');
+      spSel.exit().remove();
+
+      // points: bathrooms
       const bathPoints = data.filter(d=>+d.bathrooms===c).map(d=>({original:d, py:y(+d.price)}));
-  bathPoints.forEach(p=>{ const ix=d3.bisectLeft(ySamples, +p.original.price); const densVal=(dBath[ix]&&dBath[ix][1])||0; const maxJ=densityScale(densVal); p.jitterX = centerRight + (Math.random()*2 -1) * Math.max(1, maxJ*0.9); });
+      bathPoints.forEach(p=>{ const ix=d3.bisectLeft(ySamples, +p.original.price); const densVal=(dBath[ix]&&dBath[ix][1])||0; const maxJ=densityScale(densVal); p.jitterX = centerRight + (Math.random()*2 -1) * Math.max(1, maxJ*0.9); });
       const bapSel = this.rowsGroup.selectAll(`.point-bath-${c}`).data(bathPoints, d=>d.original.index);
       const bapEnter = bapSel.enter().append('circle').attr('class', `vpoint point-bath`).attr('r',3).on('click',(e,d)=>controllerMethods.handleOnClick(d.original));
       bapEnter.merge(bapSel).attr('cx',d=>d.jitterX).attr('cy',d=>d.py).style('fill','#F5A623').style('opacity',this.defaultOpacity).style('stroke','none');
       bapSel.exit().remove();
 
-      const cntTotal = data.filter(d=>+d.bedrooms===c || +d.bathrooms===c).length;
-      const tickSel = this.rowsGroup.selectAll(`.count-tick-${c}`).data([c]);
-      const tickEnter = tickSel.enter().append('text').attr('class',`count-tick-${c}`);
-      tickEnter.merge(tickSel).attr('x', bandStart + xBand.bandwidth()/2).attr('y', this.height + 14).text(`${c} (${cntTotal})`).attr('text-anchor','middle');
+  const tickSel = this.rowsGroup.selectAll(`.count-tick-${c}`).data([c]);
+  const tickEnter = tickSel.enter().append('text').attr('class',`count-tick-${c}`);
+  // show only the x axis value (no counts in parentheses)
+  tickEnter.merge(tickSel).attr('x', bandStart + xBand.bandwidth()/2).attr('y', this.height + 14).text(`${c}`).attr('text-anchor','middle');
       tickSel.exit().remove();
     });
 

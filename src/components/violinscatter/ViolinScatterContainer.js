@@ -48,6 +48,7 @@ function ViolinScatterContainer({data, scatterplotControllerMethods, selectedIte
         <div className="stackedCountsWrapper col2">
             <div className="stackedCountsLegend">
                 <div className="legend-item"><span className="legend-swatch swatch-bed"></span> Bedrooms</div>
+                <div className="legend-item"><span className="legend-swatch swatch-story"></span> Stories</div>
                 <div className="legend-item"><span className="legend-swatch swatch-bath"></span> Bathrooms</div>
                 <div style={{marginLeft:'auto'}}>
                     <button onClick={()=>{

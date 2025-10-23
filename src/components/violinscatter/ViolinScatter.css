@@ -27,10 +27,13 @@
 .legend-item{display:inline-flex; align-items:center; gap:6px; font-size:13px}
 .legend-swatch{width:14px; height:14px; display:inline-block; border-radius:3px}
 .swatch-bed{background:#4A90E2}
+.swatch-story{background:#9b59b6}
 .swatch-bath{background:#F5A623}
 
 /* multi-brush rectangle styling */
 .multi-brush{fill:rgba(74,144,226,0.12); stroke:#1f6fbf; stroke-width:1.2}
+
+.sep-line{pointer-events:none; stroke:#999; stroke-width:4.5; stroke-dasharray:6 4; opacity:0.35}
 
 .stackedCountsLegend button{padding:6px 10px; border-radius:4px; border:1px solid #ccc; background:#fff; cursor:pointer}
 .stackedCountsLegend button:hover{background:#f6f6f6}
