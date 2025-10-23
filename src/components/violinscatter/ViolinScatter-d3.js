@@ -363,7 +363,19 @@ class ViolinScatterD3 {
       tickSel.exit().remove();
     });
 
-  // remove any previously drawn y axis (we are not drawing a y axis here; App manages shared y-axis)
+    // draw or update the x-axis label (centered under ticks)
+    const xLabelSel = this.svg.selectAll('.x-axis-label').data([null]);
+    const xLabelEnter = xLabelSel.enter().append('text').attr('class','x-axis-label');
+    xLabelEnter.merge(xLabelSel)
+      .attr('x', this.width / 2)
+      .attr('y', this.height + 30)
+      .attr('text-anchor','middle')
+      .style('font-size','12px')
+      .style('fill','#333')
+      .text('Count');
+    xLabelSel.exit().remove();
+
+    // remove any previously drawn y axis (we are not drawing a y axis here; App manages shared y-axis)
   this.svg.selectAll('.yAxis').remove();
 
   // keep references for other methods (brush handlers etc.)

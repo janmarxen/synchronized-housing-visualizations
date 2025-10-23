@@ -21,12 +21,34 @@ function App() {
     },[])
 
 
-    const [selectedItems, setSelectedItems] = useState([])
-    // make updateSelectedItems stable so child components don't receive a new object each render
-    const updateSelectedItems = useCallback((items) => {
-        setSelectedItems(items);
+    // Track selections from each view separately
+    const [leftSelection, setLeftSelection] = useState([])
+    const [rightSelection, setRightSelection] = useState([])
+    
+    // Merge both selections (union by index)
+    const selectedItems = useMemo(() => {
+        const merged = new Map();
+        leftSelection.forEach(item => merged.set(item.index, item));
+        rightSelection.forEach(item => merged.set(item.index, item));
+        return Array.from(merged.values());
+    }, [leftSelection, rightSelection]);
+
+    // Separate update methods for each view
+    const updateLeftSelection = useCallback((items) => {
+        setLeftSelection(items);
     }, []);
-    const scatterplotControllerMethods = useMemo(() => ({ updateSelectedItems }), [updateSelectedItems]);
+    
+    const updateRightSelection = useCallback((items) => {
+        setRightSelection(items);
+    }, []);
+
+    const scatterplotControllerMethods = useMemo(() => ({ 
+        updateSelectedItems: updateLeftSelection 
+    }), [updateLeftSelection]);
+    
+    const violinControllerMethods = useMemo(() => ({ 
+        updateSelectedItems: updateRightSelection 
+    }), [updateRightSelection]);
 
     // Compute y-axis domain for price (memoized so reference is stable)
     const yDomain = useMemo(()=>{
@@ -52,7 +74,7 @@ function App() {
                 />
                 <ViolinScatterContainer
                     data={data}
-                    scatterplotControllerMethods={scatterplotControllerMethods}
+                    scatterplotControllerMethods={violinControllerMethods}
                     yDomain={yDomain}
                     selectedItems={selectedItems}
                     variables={violinVariables}
