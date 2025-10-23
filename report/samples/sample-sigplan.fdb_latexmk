@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1761221964.45013 "sample-sigplan.tex" "sample-sigplan.pdf" "sample-sigplan" 1761221967.56171 2
+["pdflatex"] 1761222862.14461 "sample-sigplan.tex" "sample-sigplan.pdf" "sample-sigplan" 1761222865.38852 0
   "/etc/texmf/web2c/texmf.cnf" 1761212066.49122 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc" 1558214095 7693 0f2dce6d313c82989ec3a67fc24df2a0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc" 1455745497 9446 fe5580ca6042a44427f18d450942e7d0 ""
@@ -181,9 +181,9 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1761212096.42369 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1761212162 8213673 5223612248a5a8b3bb1aa6d6d358b0b4 ""
   "acmart.cls" 1761212389.24798 122400 54cc4edcc7b9cb1bf0a23c528626957c ""
-  "sample-sigplan.aux" 1761221967.28661 2438 75d57e9af8ccf8687ca56e05f6b7c0a6 "pdflatex"
-  "sample-sigplan.out" 1761221967.28761 2789 53c2cbdd84c51e8c305449f2c2f24ea6 "pdflatex"
-  "sample-sigplan.tex" 1761221964.41861 19260 005e0fd22c9098544be28d6d508cd6c6 ""
+  "sample-sigplan.aux" 1761222865.1173 2438 8466b165b2560b94627441472ca84e6d "pdflatex"
+  "sample-sigplan.out" 1761222865.1183 2789 53c2cbdd84c51e8c305449f2c2f24ea6 "pdflatex"
+  "sample-sigplan.tex" 1761222861.51524 12848 a04dd088d6b8130134ff9b93c413f380 ""
   (generated)
   "sample-sigplan.aux"
   "sample-sigplan.log"
