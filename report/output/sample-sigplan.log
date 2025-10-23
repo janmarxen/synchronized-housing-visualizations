@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.23)  23 OCT 2025 12:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.23)  23 OCT 2025 15:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -916,38 +916,36 @@ tim
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-
-Excluding 'CCSXML' comment.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 20.74pt on input line 179.
+(Font)              scaled to size 20.74pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 20.74pt on input line 179.
+(Font)              scaled to size 20.74pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 179.
+(Font)              scaled to size 12.0pt on input line 162.
 
 
 Class acmart Warning: No city present for an affiliation.
 
 LaTeX Font Info:    Trying to load font information for T1+LinuxBiolinumT-TLF o
-n input line 179.
+n input line 162.
 (/usr/share/texlive/texmf-dist/tex/latex/libertine/T1LinuxBiolinumT-TLF.fd
 File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 179.
+(Font)              scaled to size 10.0pt on input line 162.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 179.
+(Font)              scaled to size 10.0pt on input line 162.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 179.
+(Font)              scaled to size 7.3pt on input line 162.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
@@ -956,50 +954,39 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 179.
+(Font)              scaled to size 8.0pt on input line 162.
 LaTeX Font Info:    Trying to load font information for TS1+LinuxLibertineT-TLF
- on input line 179.
+ on input line 162.
 
 (/usr/share/texlive/texmf-dist/tex/latex/libertine/TS1LinuxLibertineT-TLF.fd
 File: TS1LinuxLibertineT-TLF.fd 2017/03/20 (autoinst) Font definitions for TS1/
 LinuxLibertineT-TLF.
 )
 LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 179.
+(Font)              scaled to size 8.0pt on input line 162.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `LinuxLibertineT-TLF' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 179.
+(Font)              scaled to size 10.0pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 12.0pt on input line 179.
+(Font)              scaled to size 12.0pt on input line 162.
 
 
 Class acmart Warning: \vspace should only be used to provide space above/below 
-surrounding objects on input line 179.
+surrounding objects on input line 162.
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 179.
+(Font)              scaled to size 10.0pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/it' will be
-(Font)              scaled to size 10.0pt on input line 179.
+(Font)              scaled to size 10.0pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 179.
+(Font)              scaled to size 9.0pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 179.
+(Font)              scaled to size 9.0pt on input line 162.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 179.
-
-LaTeX Warning: Reference `sec:design' on page 1 undefined on input line 205.
-
-
-LaTeX Warning: Reference `sec:implementation' on page 1 undefined on input line
- 205.
-
-
-LaTeX Warning: Reference `sec:discussion' on page 1 undefined on input line 205
-.
-
+(Font)              scaled to size 9.0pt on input line 162.
 [1.1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
 f-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/share/texlive/texmf-dist
 /fonts/enc/dvips/libertine/lbtn_76gpa5.enc}{/usr/share/texlive/texmf-dist/fonts
@@ -1008,76 +995,84 @@ f-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/share/texlive/texmf-dist
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_ki75ao.enc}{/usr/
 share/texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/share/
 texlive/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}]
-Overfull \hbox (5.12828pt too wide) in paragraph at lines 218--219
-[]\T1/LinuxLibertineT-TLF/b/n/10 (-20) Discrete or-di-nal: \T1/LinuxLibertineT-
-TLF/m/n/10 (-20) bed-rooms, bath-rooms, sto-ries (counts
- []
-
-
-Overfull \hbox (13.48009pt too wide) in paragraph at lines 219--220
-[]\T1/LinuxLibertineT-TLF/b/n/10 (-20) Categorical: \T1/LinuxLibertineT-TLF/m/n
-/10 (-20) fur-nish-ing sta-tus (fur-nished, semi-furnished,
- []
-
-
-Overfull \hbox (41.60419pt too wide) in paragraph at lines 222--223
-\T1/LinuxLibertineT-TLF/m/n/10 (-20) terns, (2) com-par-ing price dis-tri-bu-ti
-ons across bed-room/bathroom/story
- []
-
-
-Overfull \hbox (8.70589pt too wide) in paragraph at lines 236--237
-\T1/LinuxLibertineT-TLF/m/n/10 (-20) (e.g., se-lect both low-area/low-price AND
- high-area/high-
- []
-
-
-Overfull \hbox (19.7994pt too wide) in paragraph at lines 249--250
-[]\T1/LinuxLibertineT-TLF/b/n/10 (-20) X-axis: \T1/LinuxLibertineT-TLF/m/n/10 (
--20) Cat-e-gor-i-cal band scale for bed-room/bathroom/story
- []
-
-
-Overfull \hbox (5.03629pt too wide) in paragraph at lines 252--253
-[]\T1/LinuxLibertineT-TLF/b/n/10 (-20) Points (jit-tered): \T1/LinuxLibertineT-
-TLF/m/n/10 (-20) In-di-vid-ual data points over-laid within
- []
-
-
-Overfull \hbox (2.06445pt too wide) in paragraph at lines 254--255
-[]\T1/LinuxLibertineT-TLF/b/n/10 (-20) Separators: \T1/LinuxLibertineT-TLF/m/n/
-10 (-20) Dashed ver-ti-cal lines be-tween x-categories
- []
-
 LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 28
-4.
+8.
+
 (/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 284.
+(Font)              scaled to size 10.0pt on input line 288.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for TS1+zi4 on input line 3
+25.
+
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd
+File: ts1zi4.fd 2018/01/14 TS1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 325.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `zi4' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+Overfull \hbox (14.03456pt too wide) in paragraph at lines 325--325
+[]  \T1/zi4/m/n/10 const [mx,my] = d3.pointer(event, this.svg.node());[] 
+ []
 
 
-! LaTeX Error: Unicode character ├ (U+251C)
-               not set up for use with LaTeX.
+Overfull \hbox (2.1867pt too wide) in paragraph at lines 327--330
+\T1/LinuxLibertineT-TLF/m/n/10 (-20) union of se-lected points. This trig-gers 
+\T1/zi4/m/n/10 highlightSelected()
+ []
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.290 \end{verbatim}
-                     
+
+Package balance Warning: You have called \balance in second column
+(balance)                Columns might not be balanced.
+
+LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 374.
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-pdfdoc.def
+File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
+)
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/se-utf8.def
+File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
+) [2.2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-4.enc}{/
+usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}]
+(/home/jan/Documents/Career_Academics/EUMaster4HPC/Courses/Semester_3/Data Visu
+alization/Tuto5-MultiDim/report/output/sample-sigplan.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+ ***********
+Package rerunfilecheck Info: File `sample-sigplan.out' has not changed.
+(rerunfilecheck)             Checksum: 53C2CBDD84C51E8C305449F2C2F24EA6;2789.
+ ) 
 Here is how much of TeX's memory you used:
- 20691 strings out of 474222
- 331896 string characters out of 5748732
- 1950975 words of memory out of 5000000
- 42164 multiletter control sequences out of 15000+600000
- 676944 words of font info for 246 fonts, out of 8000000 for 9000
+ 20837 strings out of 474222
+ 334746 string characters out of 5748732
+ 1951975 words of memory out of 5000000
+ 42280 multiletter control sequences out of 15000+600000
+ 685167 words of font info for 272 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,11n,131p,1109b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,131p,1011b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineT.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTBI.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
+Output written on "/home/jan/Documents/Career_Academics/EUMaster4HPC/Courses/Se
+mester_3/Data Visualization/Tuto5-MultiDim/report/output/sample-sigplan.pdf" (2
+ pages, 375047 bytes).
+PDF statistics:
+ 135 PDF objects out of 1000 (max. 8388607)
+ 110 compressed objects within 2 object streams
+ 18 named destinations out of 1000 (max. 500000)
+ 68737 words of extra memory for PDF output out of 74296 (max. 10000000)
 
-!  ==> Fatal error occurred, no output PDF file produced!
