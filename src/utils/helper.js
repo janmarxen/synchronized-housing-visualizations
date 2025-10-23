@@ -1,4 +1,5 @@
 import Papa from "papaparse"
+import * as d3 from 'd3'
 function gaussianRandom(mean=0, stdev=1) {
     const u = 1 - Math.random(); // Converting [0,1) to (0,1]
     const v = Math.random();
@@ -117,4 +118,23 @@ export function getBrushedData(svg, x0, y0, x1, y1, xScale, yScale, xAttribute, 
         }
     });
     return selectedData;
+}
+
+// Epanechnikov kernel function for KDE. Exported so visualizations can reuse it.
+export function kernelEpanechnikov(k) {
+        return function(v) {
+            v = v / k;
+            return Math.abs(v) <= 1 ? (0.75 * (1 - v * v)) / k : 0;
+        };
+}
+
+// Returns a density estimator function. The caller provides a kernel and x-values
+// at which to evaluate the density. The returned function accepts a sample array
+// and returns an array of [x, density] pairs.
+export function kernelDensityEstimator(kernel, xValues) {
+        return function(sample) {
+            return xValues.map(function(x) {
+                return [x, d3.mean(sample, function(v) { return kernel(x - v); }) || 0];
+            });
+        };
 }

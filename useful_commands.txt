@@ -1,0 +1,9 @@
+ls -la '/home/jan/Documents/Career_Academics/EUMaster4HPC/Courses/Semester_3/Data Visualization/Tuto5-MultiDim/report'
+chmod +x '/home/jan/Documents/Career_Academics/EUMaster4HPC/Courses/Semester_3/Data Visualization/Tuto5-MultiDim/report/build_sample.sh'
+'/home/jan/Documents/Career_Academics/EUMaster4HPC/Courses/Semester_3/Data Visualization/Tuto5-MultiDim/report/build_sample.sh'
+
+mkdir -p public/report
+cp report/output/sample-acmcp.pdf public/report/
+
+cd report/samples
+latexmk -pdf -pvc -interaction=nonstopmode -file-line-error sample-sigplan.tex

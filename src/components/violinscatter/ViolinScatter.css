@@ -25,7 +25,7 @@
 .stackedCountsScroll{overflow-x:auto; overflow-y:hidden; flex:1}
 .stackedCountsLegend{padding:6px 8px; display:flex; gap:12px; align-items:center}
 .legend-item{display:inline-flex; align-items:center; gap:6px; font-size:13px}
-.legend-swatch{width:14px; height:14px; display:inline-block; border-radius:3px}
+.legend-swatch{width:14px; height:14px; display:inline-block; border-radius:3px; border:1px solid rgba(0,0,0,0.12); box-sizing:border-box}
 .swatch-bed{background:#4A90E2}
 .swatch-story{background:#9b59b6}
 .swatch-bath{background:#F5A623}

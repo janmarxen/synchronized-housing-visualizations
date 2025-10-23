@@ -1,0 +1,500 @@
+%%
+%% This is file `sample-sigplan.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `all,proceedings,bibtex,sigplan')
+%%
+%% IMPORTANT NOTICE:
+%%
+%% For the copyright see the source file.
+%%
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigplan.tex.
+%%
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%%
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%%
+%% Commands for TeXCount
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%%
+%% The first command in your LaTeX source must be the \documentclass
+%% command.
+%%
+%% For submission and review of your manuscript please change the
+%% command to \documentclass[manuscript, screen, review]{acmart}.
+%%
+%% When submitting camera ready or to TAPS, please change the command
+%% to \documentclass[sigconf]{acmart} or whichever template is required
+%% for your publication.
+%%
+%%
+\documentclass[sigplan,screen]{acmart}
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+\setcopyright{acmlicensed}
+\copyrightyear{2025}
+\acmYear{2025}
+\acmConference[Data Viz 25]{Data Visualization Course}{2025}{Luxembourg}
+\acmDOI{}
+\acmISBN{}
+
+%%  Uncomment \acmBooktitle if the title of the proceedings is different
+%%  from ``Proceedings of ...''!
+%%
+%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%%  June 03--05, 2018, Woodstock, NY}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Interactive Multi-Dimensional Housing Data Visualization with Coordinated Views}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+
+\author{Jan Esquivel Marxen}
+\affiliation{%
+  \institution{University of Luxembourg}
+    \country{Luxembourg}
+}
+\email{jan.esquivel.001@student.uni.lu}
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Marxen}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+  Effective visualization of multi-dimensional datasets requires
+  coordinated interaction patterns that enable users to explore
+  relationships between continuous and categorical variables.
+  This report presents an interactive visualization system for
+  housing market data implementing synchronized scatterplot and
+  violin plot views with multi-rectangle brushing. The left view
+  displays area-price relationships through a traditional
+  scatterplot, while the right view presents price distributions
+  across categorical counts (bedrooms, bathrooms, stories) using
+  kernel density estimation. The system demonstrates React-D3.js
+  integration patterns with parameterized violin rendering
+  supporting n variables, dynamic color palettes, and persistent
+  multi-rectangle selection enabling non-linear subset queries.
+  We justify the visual encodings based on data properties and
+  user tasks, discuss architectural decisions including the React
+  container pattern and shared state management, and evaluate the
+  trade-offs of design choices including KDE bandwidth selection
+  and multi-brush interaction complexity.
+\smallskip
+\noindent\rule{\linewidth}{0.4pt}
+\textit{\textbf{Note:}} Portions of this report were developed with
+the assistance of artificial intelligence tools to support code
+generation, documentation, and readability improvements. All technical
+content and implementations were reviewed and validated by the author.
+
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003120.10003121.10003122.10003334</concept_id>
+       <concept_desc>Human-centered computing~Interactive systems and 
+       tools</concept_desc>
+       <concept_significance>500</concept_significance>
+   </concept>
+   <concept>
+       <concept_id>10003120.10003121.10003124</concept_id>
+       <concept_desc>Human-centered computing~Visualization</concept_desc>
+       <concept_significance>500</concept_significance>
+   </concept>
+   <concept>
+       <concept_id>10003120.10003121.10003124.10003125</concept_id>
+       <concept_desc>Human-centered computing~Visualization 
+       techniques</concept_desc>
+       <concept_significance>300</concept_significance>
+   </concept>
+ </ccs2012>
+\end{CCSXML}
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+\keywords{Data Visualization, D3.js, React, Information Visualization,
+          Kernel Density Estimation, Violin Plots, Coordinated Views,
+          Brushing and Linking}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+\section{Introduction}
+
+Exploratory analysis of multi-dimensional datasets benefits from
+visualization techniques that reveal patterns across both continuous
+and categorical variables while supporting interactive investigation.
+Housing market data presents a rich domain for visualization: prices
+depend on continuous variables (property area) and discrete structural
+characteristics (bedrooms, bathrooms, stories). Traditional scatterplots
+show bivariate relationships effectively but provide limited insight
+into distributional patterns across categories.
+
+This project implements coordinated multiple views combining a
+scatterplot with violin plot distributions:
+
+\textbf{Left View - Scatterplot with 2D Brush:}
+\begin{itemize}
+\item Area vs. Price with multi-rectangle persistent brushing
+\item Manual rectangle creation supporting complex queries
+\item Click selection for individual data point inspection
+\end{itemize}
+
+\textbf{Right View - Violin Plots with Interaction:}
+\begin{itemize}
+\item Price distributions for bedrooms, stories, bathrooms (1-5)
+\item Kernel density estimation with Epanechnikov kernel
+\item Jittered points overlay within violin contours
+\item Multi-rectangle brushing synchronized with left scatterplot
+\item Parameterized design supporting n categorical variables
+\end{itemize}
+
+Both views implement synchronized highlighting: selections in either
+view highlight respective points in both. The architecture follows React-D3 best
+practices with separate container components managing state and D3
+classes handling rendering.
+
+This report justifies visual encodings based on data properties and
+exploratory tasks (Section~\ref{sec:design}), describes the React-D3
+architecture and implementation patterns
+(Section~\ref{sec:implementation}), and discusses design trade-offs
+including KDE parameters, color encoding, and multi-brush complexity
+(Section~\ref{sec:discussion}).
+
+\section{Visual Design and Justification}
+\label{sec:design}
+
+\subsection{Dataset Properties}
+
+The Housing.csv dataset contains 545 records describing residential
+properties with the following attributes:
+
+\begin{itemize}
+\item \textbf{Continuous:} price (dependent variable), area (square
+      feet)
+\item \textbf{Discrete ordinal:} bedrooms, bathrooms, stories (counts
+      1-5)
+\item \textbf{Categorical:} furnishing status (furnished,
+      semi-furnished, unfurnished)
+\end{itemize}
+
+\textbf{User Tasks:} The visualization supports exploratory analysis
+tasks: (1) identifying area-price correlation patterns, (2)
+comparing price distributions across bedroom/bathroom/story counts, (3)
+investigating outliers and their categorical characteristics, (4)
+selecting subsets matching non-linear criteria (e.g., ``3-bedroom houses
+priced 2M-4M'').
+
+\subsection{Scatterplot Design (Left View)}
+
+\textbf{Encoding Rationale:}
+\begin{itemize}
+\item \textbf{X-axis (area):} Linear scale for continuous quantitative
+      variable; position is the most effective channel for quantitative
+      data
+\item \textbf{Y-axis (price):} Linear scale shared between left and
+      right views to enable direct comparison
+\end{itemize}
+
+\textbf{Interaction Design:}
+\begin{itemize}
+\item \textbf{Multi-rectangle brushing:} Users draw persistent
+      rectangles via mouse movements and clicks. Multiple rectangles
+      accumulate, enabling union queries (e.g., select both
+      low-area/low-price AND high-area/high-price segments)
+\item \textbf{Click selection:} Single-click on points for individual
+      inspection
+\item \textbf{Clear selection button:} Removes all brushes and resets selection
+      state
+\end{itemize}
+
+\TODO: expand pros and cons
+\\
+\textbf{Design Pros:} Familiar scatterplot idiom; multi-rectangle brushing
+supports more complex queries than only single-rectangle selection; 
+position encoding maximizes precision.
+
+\textbf{Design Cons:} Overplotting possible at high densities; no categorical
+variable encoding (e.g., furnishing status not shown); multi-brush UI
+requires learning.
+
+\subsection{Violin Plot Design (Right View)}
+
+\textbf{Encoding Rationale:}
+\begin{itemize}
+\item \textbf{X-axis:} Categorical band scale for bedroom/bathroom/
+      story counts (1-5). Each x-position represents a count value; n
+      violins are positioned evenly within each band.
+\item \textbf{Y-axis:} Price (shared scale with left view, no
+      redundant axis drawn)
+\item \textbf{Violin contour:} Area encodes kernel density estimates
+      of price distributions per category. Width at a given y-value
+      represents relative frequency of that price.
+\item \textbf{Points (jittered):} Individual data points overlaid
+      within violin width to provide access to raw data.
+\item \textbf{Color:} D3 Tableau10 palette assigns distinct hues to
+      bedrooms/bathrooms/stories.
+\item \textbf{Separators:} Dashed vertical lines between x-categories
+      improve visual grouping.
+\end{itemize}
+
+\textbf{Interaction Design:}
+Same pattern as left view; rectangles select points within violin plots.
+Selections update both views simultaneously.
+\end{itemize}
+
+\textbf{Pros:} Violin plots show full distributions (not just summary
+statistics like box plots); KDE reveals multi-modal patterns;
+color-coded variables enable side-by-side comparison; points provide
+individual data access; parameterized design supports
+adding/removing variables dynamically.
+
+\textbf{Cons:} Violin plots less familiar than box plots; KDE bandwidth
+parameter affects smoothness (requires tuning); horizontal scrolling
+needed for many variables; multi-modal distributions may be harder to
+interpret than histograms for some users.
+
+\subsection{Design Alternatives Considered}
+
+\textbf{Parallel Coordinates:} Would show all variables simultaneously
+but sacrifice distributional detail and suffer from overplotting at 545
+records. Would also require scrolling for many variables. Is already well-known, 
+whereas our goal was to show alternative visualizations.
+
+\textbf{Heatmap/Matrix:} Could show bivariate distributions but would
+not preserve individual data points and requires binning choices (not the 
+point of this assignment).
+
+\textbf{Small Multiples of Histograms:} Similar to violins but less
+compact; histograms require bin width tuning and lose smooth
+distributional curves. We would also not be able to overlay individual points easily.
+
+The chosen design balances distributional insight (violins), individual
+data access (points), and effective multivariate exploration (scatterplot)
+while supporting non-linear interactive queries (multi-brush).
+
+\section{Implementation and Architecture}
+\label{sec:implementation}
+
+\subsection{React-D3 Integration Pattern}
+
+The system follows a clean separation between React (declarative state
+management) and D3 (imperative SVG rendering):
+
+\begin{verbatim}
+App.js (React root)
+  +-- ScatterplotContainer (React)
+  |     +-- Scatterplot-d3.js (D3 class)
+  +-- ViolinScatterContainer (React)
+        +-- ViolinScatter-d3.js (D3 class)
+\end{verbatim}
+
+\textbf{App.js responsibilities:}
+\begin{itemize}
+\item CSV loading via \texttt{fetchCSV} utility
+\item Compute shared \texttt{yDomain} for synchronized price scales
+\item Manage \texttt{selectedItems} state (array of selected data
+      objects)
+\item Provide \texttt{scatterplotControllerMethods} callbacks
+      (\texttt{updateSelectedItems}, \texttt{handleOnBrush})
+\item Pass \texttt{violinVariables} array to right view
+\end{itemize}
+
+\textbf{Container components:}
+\begin{itemize}
+\item Create D3 class instance on mount (\texttt{useEffect})
+\item Forward data, controller methods, and configuration to D3
+\item Compute color palettes from variable arrays (\texttt{useMemo})
+\item Render legends and UI controls (Clear button)
+\item Call \texttt{highlightSelected} when \texttt{selectedItems}
+      changes
+\end{itemize}
+
+\textbf{D3 classes:}
+\begin{itemize}
+\item \texttt{create(config)}: Build SVG structure, groups, pointer
+      event handlers
+\item \texttt{render(data, controllerMethods)}: Compute scales, KDE,
+      draw marks
+\item \texttt{highlightSelected(selectedItems)}: Update opacity/stroke
+      for selected items
+\item \texttt{clear()}: Cleanup on unmount
+\end{itemize}
+
+This pattern avoids common pitfalls: D3 instances are created once (not
+on every render), callbacks prevent infinite re-render loops,
+and imperative D3 logic stays isolated from React's declarative model.
+
+\subsection{Multi-Rectangle Brushing}
+
+Unlike \texttt{d3.brush} (single brush area), we implement persistent
+multi-rectangle creation:
+
+\begin{verbatim}
+svgElem.on('mousedown.multiRect', (event) => {
+  const [mx,my] = d3.pointer(event, this.svg.node());
+  this._creating = true;
+  this._createStart = [mx,my];
+  this._currentRect = this.svg.append('rect')
+    .attr('class','multi-brush')
+    .attr('x', mx).attr('y', my)
+    .attr('width', 0).attr('height', 0);
+});
+\end{verbatim}
+
+On \texttt{mouseup}, the rectangle's bounding box is stored in
+\texttt{this.multiBrushes}, and \texttt{updateBrushesSelection()}
+computes the union of points inside all rectangles. Selected items are
+passed to React via \texttt{controllerMethods.handleOnBrush(unique)},
+triggering \texttt{highlightSelected()} in both views.
+
+\section{Discussion and Trade-offs}
+\label{sec:discussion}
+
+\subsection{Multi-Brush Interaction Complexity}
+
+\textbf{Pros:} Enables more complex queries (union of multiple ranges);
+persistent rectangles provide visual feedback of selection criteria.
+
+\textbf{Cons:} Non-standard interaction pattern; users must learn
+mousedown-drag-mouseup workflow; no per-rectangle delete UI (only
+global Clear); overlapping rectangles could confuse users.
+
+\textbf{Improvement:} Adding individual 'x' buttons to each rectangle
+or implementing shift-click to toggle rectangles would improve
+usability; being able to zoom/pan the scatterplot would also help.
+
+\subsection{Color Encoding vs. Small Multiples}
+
+\textbf{Choice:} Three variables (bedrooms/bathrooms/stories) are
+color-coded and overlaid within each x-category.
+
+\textbf{Pros:} Compact layout; direct side-by-side comparison; color
+legend links variables to hues.
+
+\textbf{Cons:} Overlapping violins may occlude each other; color
+discrimination harder than spatial separation; limited to ~10 variables
+(palette size), unless we repeat colors.
+
+\textbf{Alternative:} Small multiples (separate panels per variable)
+would eliminate occlusion but sacrifice compactness and would make
+cross-variable comparison harder.
+
+\section{Conclusion}
+
+This project demonstrates effective patterns for interactive
+multi-dimensional visualization with React and D3.js. The coordinated
+scatterplot-violin view combination enables rich exploratory analysis
+of housing data, revealing both bivariate relationships and
+distributional patterns across categories. Multi-rectangle brushing
+supports complex subset queries, and the parameterized architecture
+allows dynamic variable selection.
+
+\textbf{Key contributions:}
+\begin{itemize}
+\item Clean React-D3 integration avoiding re-render pitfalls
+\item Parameterized violin plot architecture supporting n variables
+\item Multi-rectangle brushing for flexible subset selection
+\item KDE utilities (helper.js) for reusable density estimation
+\item Comprehensive inline documentation for maintainability
+\end{itemize}
+
+The design balances distributional insight (KDE violins), individual
+data access (jittered points), and effective bivariate exploration
+(scatterplot) while following established React patterns (useState,
+useRef, useEffect, useMemo) and D3 idioms (scales, generators, join).
+Future work could improve KDE bandwidth selection, add per-rectangle
+deletion, and optimize performance for larger datasets.
+
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+%% Uncomment the following line if you have a bibliography file
+%% \bibliography{sample-base}
+
+\end{document}
+\endinput

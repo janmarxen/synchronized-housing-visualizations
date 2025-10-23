@@ -35,6 +35,9 @@ function App() {
         return prices.length>0 ? [Math.min(...prices), Math.max(...prices)] : [0,1];
     },[data]);
 
+    // variables to render as violins per x-category (can be changed to render n violins)
+    const violinVariables = useMemo(()=>['bedrooms','stories','bathrooms'],[]);
+
     return (
         <div className="App">
             <div id={"MultiviewContainer"} className={"row"}>
@@ -52,6 +55,7 @@ function App() {
                     scatterplotControllerMethods={scatterplotControllerMethods}
                     yDomain={yDomain}
                     selectedItems={selectedItems}
+                    variables={violinVariables}
                 />
             </div>
         </div>
