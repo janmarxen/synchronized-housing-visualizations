@@ -27,5 +27,6 @@ yarn-error.log*
 PROJECT_STRUCTURE.md
 SYNCHRONIZATION_DIAGRAM.md
 IndividualAssignmentInstructions.pdf
-useful_commands.md
-TODO.md
+# Additional local files to remain untracked
+useful_commands.txt
+TODO
